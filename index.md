@@ -4,7 +4,7 @@
 
 The Mo Dewji Foundation conducted a series of eye camps across Tanzania in 2024, providing essential eye care services to underserved communities. This report presents a comprehensive analysis of the outcomes from five of the eight eye camps conducted this year, as data for the remaining three camps has not yet been made available. The analysis highlights the significant impact these interventions have had on patients' visual acuity and quality of life.
 
-A total of **1,471 patients** received eye care services across five locations: Masasi TC, Korogwe TC, Nachingwea, Kondoa DC, and Ifakara. The majority of procedures (80%) were Small Incision Cataract Surgeries (SICS), addressing the leading cause of preventable blindness in the region. The camps achieved an impressive **93.1% success rate** in improving visual acuity to functional levels (6/12 or better) by one month post-operation.
+A total of **1,471 patients** received eye surgical procedures across five locations: Masasi TC, Korogwe TC, Nachingwea, Kondoa DC, and Ifakara. The majority of procedures (80%) were Small Incision Cataract Surgeries (SICS), addressing the leading cause of preventable blindness in the region. The camps achieved an impressive **93.1% success rate** in improving visual acuity to functional levels (6/12 or better) by one month post-operation.
 
 
 ## Background
