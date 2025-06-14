@@ -90,19 +90,6 @@ The data shows that 62.8% of patients were aged 60 years and above, highlighting
 
 ![Age Categories](visualizations/age_categories.png)
 
-### Geographic Distribution
-
-The five eye camps were conducted in different regions of Tanzania, reaching a total of 1,471 patients:
-1. Masasi TC: 366 patients (24.9%)
-2. Korogwe TC: 354 patients (24.1%)
-3. Nachingwea: 290 patients (19.7%)
-4. Kondoa DC: 243 patients (16.5%)
-5. Ifakara: 218 patients (14.8%)
-
-This geographic distribution demonstrates the Foundation's commitment to reaching diverse communities across Tanzania, including both urban and rural areas.
-
-![Location Distribution](visualizations/location_distribution.png)
-
 ## Clinical Findings
 
 ### Diagnoses
