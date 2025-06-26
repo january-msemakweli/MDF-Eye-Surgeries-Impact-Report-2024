@@ -1,11 +1,16 @@
+<<<<<<< HEAD
 ---
 layout: default
 ---
+=======
+# Mo Dewji Foundation Eye Camp Impact Report 2024 (Surgeries)
+>>>>>>> a7d97e0ee4dcb71eeb3e6c798f0abeb86777d545
 
 # Eye Camp Impact Report: 2024
 
 This report presents the impact of eight eye camps conducted in Tanzania during 2024, focusing on surgical interventions that transformed lives through restored vision. While the camps served thousands of patients with various eye care services, this analysis covers the 2,107 patients who received surgical procedures.
 
+<<<<<<< HEAD
 ## Key Impact Highlights
 
 - **Comprehensive Care**: These camps provided screening, diagnosis, and treatment to thousands of community members
@@ -14,6 +19,10 @@ This report presents the impact of eight eye camps conducted in Tanzania during 
 - **Quality Outcomes**: 100% of surgical patients maintained or improved their vision following intervention
 - **Cataract Impact**: 1,646 cataract surgeries performed, with 83% achieving functional vision
 - **Pterygium Success**: 436 pterygium excisions performed, with 94.6% achieving functional vision
+=======
+A total of **1,471 patients** received eye surgical procedures across five locations: Masasi TC, Korogwe TC, Nachingwea, Kondoa DC, and Ifakara. The majority of procedures (80%) were Small Incision Cataract Surgeries (SICS), addressing the leading cause of preventable blindness in the region. The camps achieved an impressive **93.1% success rate** in improving visual acuity to functional levels (6/12 or better) by one month post-operation.
+
+>>>>>>> a7d97e0ee4dcb71eeb3e6c798f0abeb86777d545
 
 ## Community Reach
 
@@ -30,10 +39,48 @@ The camps served diverse communities across Tanzania, with surgical intervention
 *Surgical services reached across all age groups, with focus on elderly who have highest prevalence of vision impairment*
 
 ![Age Categories](visualizations/age_categories.png)
+<<<<<<< HEAD
 *Targeted surgical interventions across age groups, with 70.1% of surgical patients aged 60 or older*
 
 ![Location Distribution](visualizations/location_distribution.png)
 *Geographic distribution shows successful outreach to multiple communities*
+=======
+
+## Clinical Findings
+
+### Diagnoses
+
+The most common diagnoses among patients were:
+1. Cataract: 1,175 patients (79.9%)
+2. Pterygium: 253 patients (17.2%)
+3. Trachoma: 14 patients (1.0%)
+4. Conjunctival Mass: 13 patients (0.9%)
+5. Other conditions: 16 patients (1.1%)
+
+Cataracts were by far the most prevalent condition, accounting for nearly 80% of all cases, which aligns with the known burden of cataracts as a leading cause of preventable blindness in the region.
+
+![Diagnosis Distribution](visualizations/diagnosis_distribution.png)
+
+### Procedures
+
+The procedures performed at the eye camps included:
+1. Small Incision Cataract Surgery (SICS): 1,175 procedures (79.9%)
+2. Excision (for pterygium and other growths): 280 procedures (19.0%)
+3. Tarsotomy Rotation Procedure (TPR, for trachoma): 14 procedures (1.0%)
+4. Evisceration: 2 procedures (0.1%)
+
+SICS was the predominant procedure, reflecting the high prevalence of cataracts among the patient population.
+
+![Procedure Distribution](visualizations/procedure_distribution.png)
+
+### Eye Distribution
+
+Of the 1,471 procedures:
+- Right Eye (RE): 758 procedures (51.5%)
+- Left Eye (LE): 713 procedures (48.5%)
+
+The distribution between right and left eyes was nearly equal, indicating that eye conditions affected both eyes with similar frequency.
+>>>>>>> a7d97e0ee4dcb71eeb3e6c798f0abeb86777d545
 
 ![Eye Distribution](visualizations/eye_distribution.png)
 *Equal treatment of left and right eyes, demonstrating comprehensive surgical care*
