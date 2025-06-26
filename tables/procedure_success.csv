@@ -1,0 +1,6 @@
+Procedure Type,Total_Patients,Success_Count,Success_Rate (%)
+EVISCERATION,1,1.0,100.0
+EXCISION,434,411.0,94.7
+INCISION,3,2.0,66.7
+SICS,1633,1356.0,83.0
+TPR,14,11.0,78.6

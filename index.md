@@ -2,6 +2,8 @@
 
 This report presents the impact of eight eye camps conducted in Tanzania during 2024, focusing on surgical interventions that transformed lives through restored vision. While the camps served thousands of patients with various eye care services, this analysis covers the 2,107 patients who received surgical procedures.
 
+> **Note**: Throughout this report, "Success Rate" refers to the percentage of patients achieving functional vision (visual acuity of 6/18 or better) after surgery, based on World Health Organization standards for vision that enables independent daily activities.
+
 ## Key Impact Highlights
 
 - **Comprehensive Care**: These camps provided screening, diagnosis, and treatment to thousands of community members
@@ -31,6 +33,18 @@ The camps served diverse communities across Tanzania, with surgical intervention
 ![Location Distribution](visualizations/location_distribution.png)
 *Geographic distribution shows successful outreach to multiple communities*
 
+| Location       |   Total_Patients |   Success_Count |   Success_Rate (%) |
+|:---------------|-----------------:|----------------:|-------------------:|
+| IFAKARA        |              217 |             211 |               97.2 |
+| KONDOA DC      |              243 |             231 |               95.1 |
+| KOROGWE DC     |              130 |              39 |               30   |
+| KOROGWE TC     |              354 |             340 |               96   |
+| MASASI TC      |              366 |             349 |               95.4 |
+| MUHEZA         |              210 |             133 |               63.3 |
+| NACHINGWEA     |              289 |             276 |               95.5 |
+| TANGA MASIWANI |              276 |             202 |               73.2 |
+
+
 ![Eye Distribution](visualizations/eye_distribution.png)
 *Equal treatment of left and right eyes, demonstrating comprehensive surgical care*
 
@@ -45,16 +59,53 @@ The surgical interventions addressed the most pressing eye health needs in the c
 ![Diagnosis Distribution](visualizations/diagnosis_distribution.png)
 *Focus on high-impact conditions that cause the most vision impairment*
 
+| Diagnosis Type   |   Total_Patients |   Success_Count |   Success_Rate (%) |
+|:-----------------|-----------------:|----------------:|-------------------:|
+| CATARACT         |             1633 |            1356 |               83   |
+| CHALAZION        |               11 |              10 |               90.9 |
+| CONJMASS         |               13 |              13 |              100   |
+| DISPLACED LENS   |                1 |               1 |              100   |
+| EVECERATION      |                1 |               1 |              100   |
+| EYELID MASS      |                3 |               3 |              100   |
+| PABROTIC CAPSULE |                1 |               1 |              100   |
+| PTERYGIUM        |              407 |             385 |               94.6 |
+| TRACHOMA         |               14 |              11 |               78.6 |
+| TRAUMA           |                1 |               0 |                0   |
+
+
 ![Procedure Distribution](visualizations/procedure_distribution.png)
 *Procedures matched to community needs, emphasizing cost-effective interventions*
+
+| Procedure Type   |   Total_Patients |   Success_Count |   Success_Rate (%) |
+|:-----------------|-----------------:|----------------:|-------------------:|
+| EVISCERATION     |                1 |               1 |              100   |
+| EXCISION         |              434 |             411 |               94.7 |
+| INCISION         |                3 |               2 |               66.7 |
+| SICS             |             1633 |            1356 |               83   |
+| TPR              |               14 |              11 |               78.6 |
+
 
 ## Vision Transformation
 
 The surgical interventions achieved remarkable improvements in patients' vision:
 
+| Vision Status                      |   Before Surgery (%) |   After Surgery (%) |   Change (percentage points) |
+|:-----------------------------------|---------------------:|--------------------:|-----------------------------:|
+| Functional Vision (6/18 or better) |                 15.5 |                85.4 |                         69.9 |
+| Non-functional Vision              |                 84.5 |                14.6 |                        -69.9 |
+
+
 - **Functional Vision Gained**: From 13.1% to 85.4% of surgical patients with functional vision (6/18 or better)
 - **Independence Restored**: 72.3 percentage point increase in patients able to function independently
 - **Quality of Life**: Dramatic shift from predominantly poor vision to good vision among those who received surgery
+
+| Vision Category                                  |   Before Surgery (%) |   After Surgery (%) |   Change (percentage points) |
+|:-------------------------------------------------|---------------------:|--------------------:|-----------------------------:|
+| Normal/Near Normal (6/12 or better)              |                 13.2 |                78.2 |                         65   |
+| Mild Visual Impairment (6/18)                    |                  4   |                13.9 |                          9.9 |
+| Moderate Visual Impairment (6/60, 6/36)          |                  4.6 |                 6.3 |                          1.7 |
+| Blind/Severe Visual Impairment (CF, HM, PL, NPL) |                 78.2 |                 1.6 |                        -76.6 |
+
 
 ![VA Distribution by Timepoint](visualizations/va_distribution_by_timepoint.png)
 *Dramatic shift from predominantly poor vision (left) to good vision (right) among surgical patients*
@@ -131,8 +182,24 @@ The success rate analysis demonstrates the high quality of surgical intervention
 ![Success Rate by Age](visualizations/success_rate_by_age.png)
 *Consistent success across all age groups, with highest rates in working-age adults (15-49)*
 
+| Age_Group   |   Total_Patients |   Success_Count |   Success_Rate (%) |
+|:------------|-----------------:|----------------:|-------------------:|
+| 0-14        |               15 |              12 |               80   |
+| 15-49       |              387 |             351 |               90.7 |
+| 50-59       |              282 |             245 |               86.9 |
+| 60-69       |              456 |             378 |               82.9 |
+| 70-79       |              515 |             437 |               84.9 |
+| 80+         |              347 |             282 |               81.3 |
+
+
 ![Success Rate by Gender](visualizations/success_rate_by_gender.png)
 *Equal success rates for males and females, demonstrating gender equity in outcomes*
+
+| SEX    |   Total_Patients |   Success_Count |   Success_Rate (%) |
+|:-------|-----------------:|----------------:|-------------------:|
+| Female |             1129 |             963 |               85.3 |
+| Male   |              956 |             818 |               85.6 |
+
 
 ## Conclusion
 
