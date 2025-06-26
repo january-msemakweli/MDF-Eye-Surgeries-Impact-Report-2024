@@ -12,12 +12,16 @@ plt.style.use('ggplot')
 sns.set(font_scale=1.2)
 sns.set_style("whitegrid")
 
-# Read the data
+# Read the data - use the fixed dataset
 df = pd.read_csv('operated_eye_va_data.csv')
 
-# Filter for cataract patients only
-cataract_df = df[df['DIAGNOSIS'].str.contains('CATARACT', case=False, na=False)]
-print(f"Number of cataract patients: {len(cataract_df)}")
+# Ensure gender data is consistent (M/F should be Male/Female)
+df['SEX'] = df['SEX'].replace({'M': 'Male', 'F': 'Female'})
+
+# Filter for cataract patients and exclude evisceration cases
+cataract_df = df[(df['DIAGNOSIS'].str.contains('CATARACT', case=False, na=False)) & 
+                (df['CONFIRMED PROCEDURE'] != 'EVISCERATION')]
+print(f"Number of cataract patients (excluding evisceration): {len(cataract_df)}")
 
 # Define function to convert VA to numeric scale
 def va_to_numeric(va):
@@ -49,14 +53,14 @@ def va_to_numeric(va):
         return np.nan
 
 # Convert VA to numeric scale
-va_columns = ['PRE_OP_VA', '1_DAY_POST_OP_VA', '2_WEEKS_POST_OP_VA', '1_MONTH_POST_OP_VA']
+va_columns = ['PRE_OP_VA', '1_MONTH_POST_OP_VA']
 for col in va_columns:
     cataract_df[f'{col}_Numeric'] = cataract_df[col].apply(va_to_numeric)
 
 # Get median VA at each time point
 median_va = {}
 for col in [f'{c}_Numeric' for c in va_columns]:
-    median_va[col] = cataract_df[col].median()
+    median_va[col] = cataract_df[col].dropna().median()
 
 print("Median VA values at each time point:")
 for col, value in median_va.items():
@@ -64,7 +68,7 @@ for col, value in median_va.items():
 
 # Create a dataframe for the journey
 journey_df = pd.DataFrame({
-    'Time Point': ['Pre-Operation', '1 Day Post-Op', '2 Weeks Post-Op', '1 Month Post-Op'],
+    'Time Point': ['Pre-Operation', '1 Month Post-Op'],
     'Median VA': [median_va[f'{c}_Numeric'] for c in va_columns]
 })
 
@@ -98,8 +102,8 @@ plt.ylabel('Visual Acuity', fontsize=14)
 # Add grid for better readability
 plt.grid(True, linestyle='--', alpha=0.7)
 
-# Add a horizontal line at 6/12 (functional vision)
-plt.axhline(y=8, color='green', linestyle='--', alpha=0.7, label='Functional Vision (6/12)')
+# Add a horizontal line at 6/18 (functional vision)
+plt.axhline(y=7, color='green', linestyle='--', alpha=0.7, label='Functional Vision (6/18)')
 
 # Add a horizontal line at 6/60 (legal blindness threshold)
 plt.axhline(y=4, color='red', linestyle='--', alpha=0.7, label='Legal Blindness Threshold (6/60)')
@@ -166,7 +170,7 @@ colors = plt.cm.RdYlGn(np.linspace(0.1, 0.9, len(va_categories)))
 va_distribution_pct.T.plot(kind='area', stacked=True, figsize=(14, 10), 
                           color=colors)
 
-plt.title('Distribution of Visual Acuity Over Time (Cataract Patients)', fontsize=18, fontweight='bold')
+plt.title('Distribution of Visual Acuity Over Time for Cataract Patients', fontsize=18, fontweight='bold')
 plt.xlabel('Time Point', fontsize=14)
 plt.ylabel('Percentage of Patients', fontsize=14)
 plt.legend(title='Visual Acuity', bbox_to_anchor=(1.05, 1), loc='upper left')

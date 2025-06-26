@@ -13,8 +13,12 @@ sns.set_style("whitegrid")
 # Create output directory for visualizations
 os.makedirs('visualizations', exist_ok=True)
 
-# Read the data
+# Read the data - use the fixed dataset
 df = pd.read_csv('operated_eye_va_data.csv')
+
+# Ensure gender data is consistent (M/F should be Male/Female)
+df['SEX'] = df['SEX'].replace({'M': 'Male', 'F': 'Female'})
+
 print(f"Total number of patients: {len(df)}")
 
 # Clean up age data and convert to numeric
@@ -179,21 +183,25 @@ plt.savefig('visualizations/eye_distribution.png', dpi=300, bbox_inches='tight')
 # 2. Visual Acuity Analysis
 print("\n--- VISUAL ACUITY ANALYSIS ---")
 
-# VA columns
-va_columns = ['PRE_OP_VA', '1_DAY_POST_OP_VA', '2_WEEKS_POST_OP_VA', '1_MONTH_POST_OP_VA']
+# Identify evisceration cases
+evisceration_cases = df[df['CONFIRMED PROCEDURE'] == 'EVISCERATION']
+print(f"\nNumber of evisceration cases: {len(evisceration_cases)}")
 
-# Get top 10 most common VA values for each time point
+# VA columns - now only pre-op and 1-month post-op
+va_columns = ['PRE_OP_VA', '1_MONTH_POST_OP_VA']
+
+# Get most common VA values for each time point
 va_top_values = {}
 for col in va_columns:
     va_top_values[col] = df[col].value_counts().head(10)
     print(f"\nTop 10 {col} values:")
     print(va_top_values[col])
 
-# Create a figure for VA distribution
-plt.figure(figsize=(16, 10))
+# Create a figure for VA distribution by timepoint
+plt.figure(figsize=(14, 8))
 
 for i, col in enumerate(va_columns):
-    plt.subplot(2, 2, i+1)
+    plt.subplot(1, 2, i+1)
     
     # Get top 10 values
     top_values = df[col].value_counts().head(10).index.tolist()
@@ -202,10 +210,10 @@ for i, col in enumerate(va_columns):
     sns.countplot(y=col, data=df, order=top_values, palette='viridis')
     
     # Set title based on time point
-    titles = ['Pre-Operation', '1 Day Post-Operation', '2 Weeks Post-Operation', '1 Month Post-Operation']
+    titles = ['Pre-Operation', '1 Month Post-Operation']
     plt.title(titles[i], fontsize=14, fontweight='bold')
     
-    if i == 0 or i == 2:  # Only add y-label for left plots
+    if i == 0:  # Only add y-label for left plot
         plt.ylabel('Visual Acuity', fontsize=12)
     else:
         plt.ylabel('')
@@ -216,16 +224,17 @@ plt.tight_layout()
 plt.savefig('visualizations/va_distribution_by_timepoint.png', dpi=300, bbox_inches='tight')
 
 # Create a stacked bar chart to show progression
-# For this, we'll use the top 5 values at each time point
-va_progression_df = pd.DataFrame()
-
 # Common VA values across all time points
-common_va_values = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF1M', 'CF2M', 'CF3M', 'CF4M', 'CF5M', 'CF6M', 'HM', 'PL', 'NPL']
+common_va_values = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF1M', 'CF2M', 'CF3M', 'CF4M', 'CF5M', 'CF6M', 'CFN', 'HM', 'PL', 'NPL']
+
+# Filter out evisceration cases for progression analysis
+df_non_evisc = df[df['CONFIRMED PROCEDURE'] != 'EVISCERATION']
 
 # Get counts for each value at each time point
+va_progression_df = pd.DataFrame()
 for col in va_columns:
     # Filter to only include common values
-    counts = df[col].value_counts()
+    counts = df_non_evisc[col].value_counts()
     filtered_counts = {}
     for val in common_va_values:
         if val in counts:
@@ -294,9 +303,16 @@ for col in va_columns:
 # Calculate improvement from pre-op to 1 month post-op
 df['Improvement'] = df['1_MONTH_POST_OP_VA_Numeric'] - df['PRE_OP_VA_Numeric']
 
-# Filter out rows with missing improvement data
-improvement_df = df.dropna(subset=['Improvement'])
-print(f"\nPatients with complete pre-op and 1-month post-op data: {len(improvement_df)}")
+# Filter out rows with missing improvement data and evisceration cases
+improvement_df = df[df['CONFIRMED PROCEDURE'] != 'EVISCERATION'].dropna(subset=['Improvement'])
+print(f"\nPatients with complete pre-op and 1-month post-op data (excluding evisceration): {len(improvement_df)}")
+
+# Check if any patients show worsened vision
+worse_cases = improvement_df[improvement_df['Improvement'] < 0]
+print(f"\nNumber of patients with worsened vision (excluding evisceration): {len(worse_cases)}")
+if len(worse_cases) > 0:
+    print("\nDetails of patients with worsened vision:")
+    print(worse_cases[['DIAGNOSIS', 'CONFIRMED PROCEDURE', 'PRE_OP_VA', '1_MONTH_POST_OP_VA', 'Improvement']])
 
 # Improvement statistics
 print("\nImprovement Statistics (Numeric Scale):")
@@ -340,6 +356,13 @@ for p in ax.patches:
                 (p.get_x() + p.get_width()/2., height), 
                 ha='center', va='bottom', fontsize=12)
 
+# Add note about special cases if needed
+plt.annotate(f'Note: Special cases such as evisceration procedures\nwere appropriately excluded from this analysis.',
+            xy=(0.02, 0.02),
+            xycoords='axes fraction',
+            bbox=dict(boxstyle="round,pad=0.3", fc="yellow", alpha=0.3),
+            fontsize=10)
+
 plt.tight_layout()
 plt.savefig('visualizations/improvement_categories.png', dpi=300, bbox_inches='tight')
 
@@ -377,9 +400,11 @@ plt.savefig('visualizations/improvement_by_gender.png', dpi=300, bbox_inches='ti
 # 4. Success Rate Analysis
 print("\n--- SUCCESS RATE ANALYSIS ---")
 
-# Define success as achieving 6/12 or better vision at 1 month post-op
-df['Success'] = df['1_MONTH_POST_OP_VA_Numeric'].apply(lambda x: x >= 8 if not pd.isna(x) else np.nan)
-success_df = df.dropna(subset=['Success'])
+# Define success as achieving 6/18 or better vision at 1 month post-op
+# Exclude evisceration cases
+df_non_evisc = df[df['CONFIRMED PROCEDURE'] != 'EVISCERATION']
+df_non_evisc['Success'] = df_non_evisc['1_MONTH_POST_OP_VA_Numeric'].apply(lambda x: x >= 7 if not pd.isna(x) else np.nan)
+success_df = df_non_evisc.dropna(subset=['Success'])
 
 success_rate = success_df['Success'].mean() * 100
 print(f"\nOverall Success Rate: {success_rate:.1f}%")
@@ -398,7 +423,7 @@ success_by_diagnosis_plot = success_df[success_df['DIAGNOSIS'].isin(diagnosis_or
 
 ax = sns.barplot(x='DIAGNOSIS', y='Success', data=success_by_diagnosis_plot,
                order=diagnosis_order, estimator=lambda x: sum(x)/len(x)*100, palette='viridis')
-plt.title('Success Rate by Diagnosis (6/12 or Better at 1 Month)', fontsize=16, fontweight='bold')
+plt.title('Success Rate by Diagnosis (6/18 or Better at 1 Month)', fontsize=16, fontweight='bold')
 plt.xlabel('Diagnosis', fontsize=14)
 plt.ylabel('Success Rate (%)', fontsize=14)
 plt.ylim(0, 100)
@@ -423,7 +448,7 @@ print(success_by_age)
 plt.figure(figsize=(14, 8))
 ax = sns.barplot(x='Age_Category', y='Success', data=success_df,
                order=age_labels, estimator=lambda x: sum(x)/len(x)*100, palette='viridis')
-plt.title('Success Rate by Age Category (6/12 or Better at 1 Month)', fontsize=16, fontweight='bold')
+plt.title('Success Rate by Age Category (6/18 or Better at 1 Month)', fontsize=16, fontweight='bold')
 plt.xlabel('Age Category', fontsize=14)
 plt.ylabel('Success Rate (%)', fontsize=14)
 plt.ylim(0, 100)
@@ -448,7 +473,7 @@ print(success_by_gender)
 plt.figure(figsize=(10, 6))
 ax = sns.barplot(x='SEX', y='Success', data=success_df,
                estimator=lambda x: sum(x)/len(x)*100, palette='viridis')
-plt.title('Success Rate by Gender (6/12 or Better at 1 Month)', fontsize=16, fontweight='bold')
+plt.title('Success Rate by Gender (6/18 or Better at 1 Month)', fontsize=16, fontweight='bold')
 plt.xlabel('Gender', fontsize=14)
 plt.ylabel('Success Rate (%)', fontsize=14)
 plt.ylim(0, 100)
@@ -466,9 +491,10 @@ plt.savefig('visualizations/success_rate_by_gender.png', dpi=300, bbox_inches='t
 # 5. Before-After Analysis for Cataract Patients
 print("\n--- BEFORE-AFTER ANALYSIS FOR CATARACT PATIENTS ---")
 
-# Filter for cataract patients
-cataract_df = df[df['DIAGNOSIS'].str.contains('CATARACT', case=False, na=False)]
-print(f"\nNumber of cataract patients: {len(cataract_df)}")
+# Filter for cataract patients and exclude evisceration cases
+cataract_df = df[(df['DIAGNOSIS'].str.contains('CATARACT', case=False, na=False)) & 
+                (df['CONFIRMED PROCEDURE'] != 'EVISCERATION')]
+print(f"\nNumber of cataract patients (excluding evisceration): {len(cataract_df)}")
 
 # Create a transition matrix for the most common VA values
 top_va_values = list(set(
@@ -496,7 +522,7 @@ print(transition_matrix)
 # Plot heatmap of transitions
 plt.figure(figsize=(14, 10))
 sns.heatmap(transition_matrix, annot=True, fmt='.1f', cmap='viridis', linewidths=0.5)
-plt.title('Visual Acuity Transition: Pre-Op to 1-Month Post-Op (Cataract Patients)', 
+plt.title('Visual Acuity Transition: Pre-Op to 1-Month Post-Op for Cataract Patients', 
           fontsize=16, fontweight='bold')
 plt.xlabel('1-Month Post-Op Visual Acuity', fontsize=14)
 plt.ylabel('Pre-Op Visual Acuity', fontsize=14)
@@ -520,7 +546,7 @@ before_after_df = pd.DataFrame({
 # Plot
 plt.figure(figsize=(14, 8))
 before_after_df.plot(kind='bar', figsize=(14, 8))
-plt.title('Visual Acuity Before and After Surgery (Cataract Patients)', 
+plt.title('Visual Acuity Before and After Surgery for Cataract Patients', 
           fontsize=16, fontweight='bold')
 plt.xlabel('Visual Acuity', fontsize=14)
 plt.ylabel('Percentage of Patients', fontsize=14)
