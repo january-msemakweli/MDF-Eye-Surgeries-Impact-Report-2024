@@ -18,7 +18,7 @@ cataract_df = df[(df['DIAGNOSIS'].str.contains('CATARACT', case=False, na=False)
 print(f"Number of cataract patients (excluding evisceration): {len(cataract_df)}")
 
 # Define the ordered VA values from best to worst
-ordered_va = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF1M', 'CF2M', 'CF3M', 'CF4M', 'CF5M', 'CF6M', 'CFN', 'HM', 'PL', 'NPL']
+ordered_va = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF6M', 'CF5M', 'CF4M', 'CF3M', 'CF2M', 'CF1M', 'CFN', 'HM', 'PL', 'NPL']
 
 # Count occurrences of each VA value at pre-op and 1-month post-op
 pre_op_counts = cataract_df['PRE_OP_VA'].value_counts()

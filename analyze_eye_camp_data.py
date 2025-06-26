@@ -201,35 +201,36 @@ for col in va_columns:
     print(f"\nTop 10 {col} values:")
     print(va_top_values[col])
 
-# Create a figure for VA distribution by timepoint
+# VA distribution by timepoint
 plt.figure(figsize=(14, 8))
 
-for i, col in enumerate(va_columns):
-    plt.subplot(1, 2, i+1)
-    
-    # Get top 10 values
-    top_values = df[col].value_counts().head(10).index.tolist()
-    
-    # Create countplot
-    sns.countplot(y=col, data=df, order=top_values, palette='viridis')
-    
-    # Set title based on time point
-    titles = ['Pre-Operation', '1 Month Post-Operation']
-    plt.title(titles[i], fontsize=14, fontweight='bold')
-    
-    if i == 0:  # Only add y-label for left plot
-        plt.ylabel('Visual Acuity', fontsize=12)
-    else:
-        plt.ylabel('')
-        
-    plt.xlabel('Number of Patients', fontsize=12)
+# Create subplots for before and after
+plt.subplot(1, 2, 1)
+preop_counts = df['PRE_OP_VA'].value_counts()
+preop_counts = preop_counts.reindex(['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 
+                                     'CF6M', 'CF5M', 'CF4M', 'CF3M', 'CF2M', 'CF1M', 'CFN', 'HM', 'PL', 'NPL'])
+preop_counts = preop_counts.dropna()
+plt.barh(preop_counts.index, preop_counts.values, color='darkred')
+plt.title('Pre-Op Visual Acuity', fontsize=16)
+plt.xlabel('Number of Patients', fontsize=14)
+plt.ylabel('Visual Acuity', fontsize=14)
+
+plt.subplot(1, 2, 2)
+postop_counts = df['1_MONTH_POST_OP_VA'].value_counts()
+postop_counts = postop_counts.reindex(['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 
+                                      'CF6M', 'CF5M', 'CF4M', 'CF3M', 'CF2M', 'CF1M', 'CFN', 'HM', 'PL', 'NPL'])
+postop_counts = postop_counts.dropna()
+plt.barh(postop_counts.index, postop_counts.values, color='darkgreen')
+plt.title('1-Month Post-Op Visual Acuity', fontsize=16)
+plt.xlabel('Number of Patients', fontsize=14)
 
 plt.tight_layout()
 plt.savefig('visualizations/va_distribution_by_timepoint.png', dpi=300, bbox_inches='tight')
+plt.close()
 
 # Create a stacked bar chart to show progression
 # Common VA values across all time points
-common_va_values = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF1M', 'CF2M', 'CF3M', 'CF4M', 'CF5M', 'CF6M', 'CFN', 'HM', 'PL', 'NPL']
+common_va_values = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF6M', 'CF5M', 'CF4M', 'CF3M', 'CF2M', 'CF1M', 'CFN', 'HM', 'PL', 'NPL']
 
 # Filter out evisceration cases for progression analysis
 df_non_evisc = df[df['CONFIRMED PROCEDURE'] != 'EVISCERATION']
@@ -281,22 +282,36 @@ def va_to_numeric(va):
         return 1
     elif va == 'HM':
         return 2
-    elif va.startswith('CF'):
+    elif va == 'CFN':
         return 3
-    elif va == '6/60':
+    elif va == 'CF1M':
         return 4
-    elif va == '6/36':
+    elif va == 'CF2M':
         return 5
-    elif va == '6/24':
+    elif va == 'CF3M':
         return 6
-    elif va == '6/18':
+    elif va == 'CF4M':
         return 7
-    elif va == '6/12':
+    elif va == 'CF5M':
         return 8
-    elif va == '6/9':
+    elif va == 'CF6M':
         return 9
-    elif va == '6/6':
+    elif va == '6/60':
         return 10
+    elif va == '6/36':
+        return 11
+    elif va == '6/24':
+        return 12
+    elif va == '6/18':
+        return 13
+    elif va == '6/12':
+        return 14
+    elif va == '6/9':
+        return 15
+    elif va == '6/6':
+        return 16
+    elif va == '6/5':
+        return 17
     else:
         return np.nan
 
