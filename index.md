@@ -65,7 +65,6 @@ The surgical interventions addressed the most pressing eye health needs in the c
 | CHALAZION        |               11 |              10 |               90.9 |
 | CONJMASS         |               13 |              13 |              100   |
 | DISPLACED LENS   |                1 |               1 |              100   |
-| EVECERATION      |                1 |               1 |              100   |
 | EYELID MASS      |                3 |               3 |              100   |
 | PABROTIC CAPSULE |                1 |               1 |              100   |
 | PTERYGIUM        |              407 |             385 |               94.6 |

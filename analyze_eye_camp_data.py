@@ -115,23 +115,27 @@ diagnosis_counts = df['DIAGNOSIS'].value_counts()
 print("\nDiagnosis Distribution:")
 print(diagnosis_counts)
 
-plt.figure(figsize=(12, 6))
-ax = sns.countplot(y='DIAGNOSIS', data=df, 
-                  order=df['DIAGNOSIS'].value_counts().index,
+# Filter out EVECERATION for the visualization only
+diagnosis_df = df[df['DIAGNOSIS'] != 'EVECERATION'].copy()
+
+plt.figure(figsize=(14, 10))
+ax = sns.countplot(y='DIAGNOSIS', data=diagnosis_df,
+                  order=diagnosis_df['DIAGNOSIS'].value_counts().index,
                   palette='viridis')
-plt.title('Diagnosis Distribution', fontsize=16, fontweight='bold')
+plt.title('Diagnosis Distribution', fontsize=16)
 plt.xlabel('Number of Patients', fontsize=14)
 plt.ylabel('Diagnosis', fontsize=14)
 
-# Add count and percentage labels on bars
-total = len(df)
+# Add count and percentage labels
+total = len(diagnosis_df)
 for p in ax.patches:
     width = p.get_width()
-    ax.annotate(f'{int(width)} ({width/total:.1%})', 
-                (width, p.get_y() + p.get_height()/2), 
-                ha='left', va='center', fontsize=12)
+    percentage = 100 * width / total
+    ax.text(width + 5,
+            p.get_y() + p.get_height()/2,
+            f'{int(width)} ({percentage:.1f}%)',
+            va="center", fontsize=12)
 
-plt.tight_layout()
 plt.savefig('visualizations/diagnosis_distribution.png', dpi=300, bbox_inches='tight')
 
 # Procedure distribution
