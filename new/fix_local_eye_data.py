@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
 
-# Read the dataset
-print("Reading Combined_Eye_Surgery_Dataset.csv...")
-df = pd.read_csv('Combined_Eye_Surgery_Dataset.csv')
+# Read the local dataset
+print("Reading operated_eye_va_data.csv...")
+df = pd.read_csv('operated_eye_va_data.csv')
 
 print(f"Total number of records: {len(df)}")
 
@@ -30,7 +30,7 @@ if missing_eye > 0:
     print(f"Eye mode (most common): {eye_mode}")
     
     # Fill missing values with mode
-    df['EYE'].fillna(eye_mode, inplace=True)
+    df.loc[df['EYE'].isna(), 'EYE'] = eye_mode
     print(f"Filled {missing_eye} missing eye values with '{eye_mode}'")
 
 print("\nFinal eye distribution after standardization:")
@@ -39,5 +39,5 @@ print(df['EYE'].value_counts())
 print(f"\nRemaining missing eye values: {df['EYE'].isna().sum()}")
 
 # Save the cleaned dataset
-df.to_csv('Combined_Eye_Surgery_Dataset.csv', index=False)
-print("\nEye data standardization complete. Dataset saved.")
+df.to_csv('operated_eye_va_data.csv', index=False)
+print("\nEye data standardization complete. Local dataset saved.")
