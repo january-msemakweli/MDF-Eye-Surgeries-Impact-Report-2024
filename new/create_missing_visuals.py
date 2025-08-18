@@ -10,7 +10,7 @@ sns.set(font_scale=1.2)
 sns.set_style("whitegrid")
 
 # Read the data
-df = pd.read_csv('../Combined_Eye_Surgery_Dataset.csv')
+df = pd.read_csv('operated_eye_va_data.csv')
 
 # Define VA to numeric function (same as original)
 def va_to_numeric(va):
