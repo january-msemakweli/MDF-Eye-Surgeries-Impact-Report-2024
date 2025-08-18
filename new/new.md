@@ -65,9 +65,7 @@ The surgical interventions addressed the most pressing eye health needs in the c
 | I&D             |                2 |               1 |               50.0 |
 | FB              |                2 |               1 |               50.0 |
 | AC WASHOUT      |                1 |               0 |                0.0 |
-| EVISCERATION    |                1 |               1 |               100.0 |
 | LIDMASS         |                1 |               1 |               100.0 |
-| UNKNOWN         |                0 |               0 |                nan |
 
 
 ## Vision Transformation
@@ -92,7 +90,7 @@ The Mo Dewji Foundation eye camps demonstrated remarkable success in transformin
 *Visual representation of the transformation in vision quality across all follow-up periods*
 
 ![VA Distribution by Timepoint](visualizations/va_distribution_by_timepoint.png)
-*Comprehensive view of visual acuity improvement across all time points (Pre-Op, 1-Day, 2-Weeks, 1-Month)*
+*Comprehensive view of visual acuity improvement (Pre-Op, 1-Month)*
 
 ## Overall Visual Acuity Journey - All Eye Camp Surgeries
 
